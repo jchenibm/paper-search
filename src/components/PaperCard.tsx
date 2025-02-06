@@ -29,8 +29,10 @@ function formatAuthors(authors: string[], maxLength: number = 200) {
 
 export default function PaperCard({ paper }: PaperCardProps) {
   const [showModal, setShowModal] = useState(false);
-  
   const formattedDate = paper.publish_time.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
+  
+  // 生成 PDF 链接
+  const pdfLink = paper.link.replace('arxiv.org/abs/', 'arxiv.org/pdf/');
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow h-[200px] flex flex-col">
@@ -91,9 +93,14 @@ export default function PaperCard({ paper }: PaperCardProps) {
                 <p className="text-gray-700 mb-4">{paper.abstract}</p>
               </div>
             )}
-            <a href={paper.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
-              原文链接
-            </a>
+            <div className="flex gap-4">
+              <a href={paper.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
+                论文页面
+              </a>
+              <a href={pdfLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
+                打开PDF
+              </a>
+            </div>
           </div>
         </div>
       )}
